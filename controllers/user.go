@@ -11,6 +11,14 @@ type LoginInput struct {
 	Password string `json:"password" binding:"required"`
 }
 
+// Login godoc
+// @Summary Login with credential.
+// @Description Logging in to get jwt token to access admin or user api by roles.
+// @Tags Auth
+// @Param Body body LoginInput true "the body to login a user"
+// @Produce json
+// @Success 200 {object} map[string]interface{}
+// @Router /login [post]
 func Login(c *gin.Context) {
 	var input LoginInput
 	if err := c.ShouldBindJSON(&input); err != nil {

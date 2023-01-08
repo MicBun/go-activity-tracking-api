@@ -5,6 +5,7 @@ import (
 	"gorm.io/gorm"
 )
 
+// User
 type User struct {
 	ID         uint         `json:"id" gorm:"primary_key"`
 	Username   string       `json:"username" gorm:"type:varchar(255)"`

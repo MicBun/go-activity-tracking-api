@@ -7,6 +7,15 @@ import (
 	"time"
 )
 
+// ClockIn godoc
+// @Summary Clock in.
+// @Description clock in attendance.
+// @Tags ClockIn
+// @Param Authorization header string true "Authorization. How to input in swagger : 'Bearer <insert_your_token_here>'"
+// @Security BearerToken
+// @Produce json
+// @Success 200 {object} models.Attendance
+// @Router /clock-in [post]
 func ClockIn(c *gin.Context) {
 	userID, err := jwtAuth.ExtractTokenID(c)
 	if err != nil {
@@ -22,6 +31,15 @@ func ClockIn(c *gin.Context) {
 	c.JSON(200, gin.H{"message": "clock in success"})
 }
 
+// ClockOut godoc
+// @Summary Clock out.
+// @Description clock out attendance.
+// @Tags ClockOut
+// @Param Authorization header string true "Authorization. How to input in swagger : 'Bearer <insert_your_token_here>'"
+// @Security BearerToken
+// @Produce json
+// @Success 200 {object} models.Attendance
+// @Router /clock-out [post]
 func ClockOut(c *gin.Context) {
 	userID, err := jwtAuth.ExtractTokenID(c)
 	if err != nil {
@@ -44,6 +62,15 @@ type GetAttendanceOutput struct {
 	CheckOut time.Time `json:"check_out"`
 }
 
+// GetAttendances godoc
+// @Summary Get Attendances.
+// @Description Get all Attendances by login.
+// @Tags Attendance
+// @Param Authorization header string true "Authorization. How to input in swagger : 'Bearer <insert_your_token_here>'"
+// @Security BearerToken
+// @Produce json
+// @Success 200 {object} models.Attendance
+// @Router /attendance [get]
 func GetAttendances(c *gin.Context) {
 	userID, err := jwtAuth.ExtractTokenID(c)
 	if err != nil {
@@ -65,7 +92,7 @@ func GetAttendances(c *gin.Context) {
 			CheckOut: attendance.UpdatedAt,
 		})
 	}
-	
+
 	c.JSON(200, gin.H{"data": output})
 }
 
@@ -78,6 +105,16 @@ type GetAttendanceByDateOutput struct {
 	CheckOut time.Time `json:"check_out"`
 }
 
+// GetAttendanceByDate godoc
+// @Summary Get Attendance By Date.
+// @Description Get an Attendance by date.
+// @Tags Attendance
+// @Param Body body GetAttendanceByDateInput true "the body to update Activity"
+// @Param Authorization header string true "Authorization. How to input in swagger : 'Bearer <insert_your_token_here>'"
+// @Security BearerToken
+// @Produce json
+// @Success 200 {object} GetAttendanceByDateOutput
+// @Router /attendance/by-date [get]
 func GetAttendanceByDate(c *gin.Context) {
 	var input GetAttendanceByDateInput
 	if err := c.ShouldBindJSON(&input); err != nil {

@@ -7,6 +7,7 @@ import (
 	"time"
 )
 
+// Attendance
 type Attendance struct {
 	ID        uint      `json:"id" gorm:"primary_key,auto_increment"`
 	UserID    uint      `json:"user_id"`

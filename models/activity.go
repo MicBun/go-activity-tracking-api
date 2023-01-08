@@ -6,6 +6,7 @@ import (
 	"time"
 )
 
+// Activity
 type Activity struct {
 	ID          uint      `json:"id" gorm:"primary_key,auto_increment"`
 	UserID      uint      `json:"user_id"`

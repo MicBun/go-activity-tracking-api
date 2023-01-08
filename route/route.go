@@ -5,6 +5,8 @@ import (
 	"github.com/MicBun/go-activity-tracking-api/middleware"
 	"github.com/MicBun/go-activity-tracking-api/utils"
 	"github.com/gin-gonic/gin"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 	"gorm.io/gorm"
 )
 
@@ -40,6 +42,8 @@ func SetupRouter(db *gorm.DB) *gin.Engine {
 	activity.GET("", controllers.GetActivities)
 	activity.PUT("/:id", controllers.UpdateActivity)
 	activity.DELETE("/:id", controllers.DeleteActivity)
+
+	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	return r
 }

@@ -12,6 +12,16 @@ type CreateActivityInput struct {
 	Description string `json:"description" binding:"required"`
 }
 
+// CreateActivity godoc
+// @Summary Create New Activity.
+// @Description Creating a new Activity.
+// @Tags Activity
+// @Param Body body CreateActivityInput true "the body to create a new Activity"
+// @Param Authorization header string true "Authorization. How to input in swagger : 'Bearer <insert_your_token_here>'"
+// @Security BearerToken
+// @Produce json
+// @Success 200 {object} models.Activity
+// @Router /activity [post]
 func CreateActivity(c *gin.Context) {
 	var input CreateActivityInput
 	if err := c.ShouldBindJSON(&input); err != nil {
@@ -32,6 +42,15 @@ func CreateActivity(c *gin.Context) {
 	c.JSON(201, gin.H{"data": activity})
 }
 
+// GetActivities godoc
+// @Summary Get all Activities from user.
+// @Description Get a list of Activities.
+// @Tags Activity
+// @Param Authorization header string true "Authorization. How to input in swagger : 'Bearer <insert_your_token_here>'"
+// @Security BearerToken
+// @Produce json
+// @Success 200 {object} []models.Activity
+// @Router /activity [get]
 func GetActivities(c *gin.Context) {
 	userID, err := jwtAuth.ExtractTokenID(c)
 	if err != nil {
@@ -47,6 +66,17 @@ func GetActivities(c *gin.Context) {
 	c.JSON(200, gin.H{"data": activitiesList})
 }
 
+// UpdateActivity godoc
+// @Summary Update Activity.
+// @Description Update Activity By ID.
+// @Tags Activity
+// @Produce json
+// @Param id path string true "Activity id"
+// @Param Body body CreateActivityInput true "the body to update Activity"
+// @Param Authorization header string true "Authorization. How to input in swagger : 'Bearer <insert_your_token_here>'"
+// @Security BearerToken
+// @Success 200
+// @Router /activity/{id} [put]
 func UpdateActivity(c *gin.Context) {
 	var input CreateActivityInput
 	activityID, err := strconv.Atoi(c.Param("id"))
@@ -73,6 +103,16 @@ func UpdateActivity(c *gin.Context) {
 
 }
 
+// DeleteActivity godoc
+// @Summary Delete one Activity.
+// @Description Delete a Activity by id.
+// @Tags Activity
+// @Produce json
+// @Param id path string true "Activity id"
+// @Param Authorization header string true "Authorization. How to input in swagger : 'Bearer <insert_your_token_here>'"
+// @Security BearerToken
+// @Success 200 {object} map[string]boolean
+// @Router /activity/{id} [delete]
 func DeleteActivity(c *gin.Context) {
 	activityID, err := strconv.Atoi(c.Param("id"))
 	if err != nil {

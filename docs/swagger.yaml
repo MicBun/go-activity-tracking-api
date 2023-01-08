@@ -1,0 +1,302 @@
+definitions:
+  controllers.CreateActivityInput:
+    properties:
+      description:
+        type: string
+      name:
+        type: string
+    required:
+    - description
+    - name
+    type: object
+  controllers.GetAttendanceByDateInput:
+    properties:
+      date:
+        type: string
+    required:
+    - date
+    type: object
+  controllers.GetAttendanceByDateOutput:
+    properties:
+      check_in:
+        type: string
+      check_out:
+        type: string
+    type: object
+  controllers.LoginInput:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    required:
+    - password
+    - username
+    type: object
+  models.Activity:
+    properties:
+      created_at:
+        type: string
+      description:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      updated_at:
+        type: string
+      user_id:
+        type: integer
+    type: object
+  models.Attendance:
+    properties:
+      created_at:
+        type: string
+      id:
+        type: integer
+      updated_at:
+        type: string
+      user_id:
+        type: integer
+    type: object
+info:
+  contact:
+    email: support@swagger.io
+    name: API Support
+    url: http://www.swagger.io/support
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+paths:
+  /activity:
+    get:
+      description: Get a list of Activities.
+      parameters:
+      - description: 'Authorization. How to input in swagger : ''Bearer <insert_your_token_here>'''
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Activity'
+            type: array
+      security:
+      - BearerToken: []
+      summary: Get all Activities from user.
+      tags:
+      - Activity
+    post:
+      description: Creating a new Activity.
+      parameters:
+      - description: the body to create a new Activity
+        in: body
+        name: Body
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.CreateActivityInput'
+      - description: 'Authorization. How to input in swagger : ''Bearer <insert_your_token_here>'''
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Activity'
+      security:
+      - BearerToken: []
+      summary: Create New Activity.
+      tags:
+      - Activity
+  /activity/{id}:
+    delete:
+      description: Delete a Activity by id.
+      parameters:
+      - description: Activity id
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: 'Authorization. How to input in swagger : ''Bearer <insert_your_token_here>'''
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: boolean
+            type: object
+      security:
+      - BearerToken: []
+      summary: Delete one Activity.
+      tags:
+      - Activity
+    put:
+      description: Update Activity By ID.
+      parameters:
+      - description: Activity id
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: the body to update Activity
+        in: body
+        name: Body
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.CreateActivityInput'
+      - description: 'Authorization. How to input in swagger : ''Bearer <insert_your_token_here>'''
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      security:
+      - BearerToken: []
+      summary: Update Activity.
+      tags:
+      - Activity
+  /attendance:
+    get:
+      description: Get all Attendances by login.
+      parameters:
+      - description: 'Authorization. How to input in swagger : ''Bearer <insert_your_token_here>'''
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Attendance'
+      security:
+      - BearerToken: []
+      summary: Get Attendances.
+      tags:
+      - Attendance
+  /attendance/by-date:
+    get:
+      description: Get an Attendance by date.
+      parameters:
+      - description: the body to update Activity
+        in: body
+        name: Body
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.GetAttendanceByDateInput'
+      - description: 'Authorization. How to input in swagger : ''Bearer <insert_your_token_here>'''
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controllers.GetAttendanceByDateOutput'
+      security:
+      - BearerToken: []
+      summary: Get Attendance By Date.
+      tags:
+      - Attendance
+  /clock-in:
+    post:
+      description: clock in attendance.
+      parameters:
+      - description: 'Authorization. How to input in swagger : ''Bearer <insert_your_token_here>'''
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Attendance'
+      security:
+      - BearerToken: []
+      summary: Clock in.
+      tags:
+      - ClockIn
+  /clock-out:
+    post:
+      description: clock out attendance.
+      parameters:
+      - description: 'Authorization. How to input in swagger : ''Bearer <insert_your_token_here>'''
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Attendance'
+      security:
+      - BearerToken: []
+      summary: Clock out.
+      tags:
+      - ClockOut
+  /login:
+    post:
+      description: Logging in to get jwt token to access admin or user api by roles.
+      parameters:
+      - description: the body to login a user
+        in: body
+        name: Body
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.LoginInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Login with credential.
+      tags:
+      - Auth
+  /reset:
+    post:
+      description: reset table.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Reset table.
+      tags:
+      - ResetTable
+swagger: "2.0"

@@ -22,6 +22,13 @@ func HandleError(ctx *gin.Context, err error) {
 	}
 }
 
+// ResetTable godoc
+// @Summary Reset table.
+// @Description reset table.
+// @Tags ResetTable
+// @Produce json
+// @Success 200 {object} string
+// @Router /reset [post]
 func ResetTable(db *gorm.DB) error {
 	if err := db.Migrator().DropTable(&models.User{}, &models.Activity{}, &models.Attendance{}); err != nil {
 		return err
