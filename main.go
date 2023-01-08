@@ -24,7 +24,7 @@ func main() {
 	}
 
 	description := "This is a sample server Activity Tracking server.\n\n" +
-		"For this sample, you can use username `user1` and password `pass1` to test the authorization filters.\n\n" +
+		"For this sample, you can use username `user1` and password `password1` after reset to test the authorization filters.\n\n" +
 		"To reset the database, use the `reset` query parameter with any value.\n\n" +
 		"Checkout my Github: https://github.com/MicBun/go-activity-tracking-api\n\n" +
 		"Checkout my Linkedin: https://www.linkedin.com/in/MicBun\n\n"
