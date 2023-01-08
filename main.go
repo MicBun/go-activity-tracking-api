@@ -10,7 +10,7 @@ import (
 func main() {
 	err := godotenv.Load()
 	if err != nil {
-		log.Fatal("Error loading .env file")
+		log.Println("Error loading .env file, using default env")
 	}
 	database := config.ConnectDataBase()
 	sqlDB, _ := database.DB()
